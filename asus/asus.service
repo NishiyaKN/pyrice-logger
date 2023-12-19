@@ -1,0 +1,11 @@
+[Unit]
+Description=Web scraping service
+After=network.target
+
+[Service]
+User=iriya
+ExecStart=/usr/bin/python3 /home/iriya/py/pyrice-logger/asus.py
+
+[Install]
+WantedBy=multi-user.target
+

@@ -4,6 +4,8 @@ After=network.target
 
 [Service]
 User=iriya
+Restart=on-failure
+RestartSec=600
 ExecStart=/usr/bin/python3 /home/iriya/py/pyrice-logger/asus/asus.py
 
 [Install]

@@ -8,8 +8,11 @@ from bs4 import BeautifulSoup
 
 from datetime import datetime
 import pandas as pd
+import requests
 
-filename = "asus.csv"
+FILENAME = "asus.csv"
+AUTH_FILE = '/home/yori/.config/tk/dc'
+PRODUCT = 'Vivobook M1502IA'
 
 def get_price():
     try: 
@@ -45,24 +48,59 @@ def get_date():
     today = datetime.today().strftime('%Y-%m-%d')
     return today
 
-def new_dataframe():
-    price_today = get_price()
+def check_new_price(old_dataframe, dados):
+    last_price = old_dataframe.loc[len(old_dataframe) - 1]['Price']
+    new_price = float(dados.loc[0]['Price'])
+    if last_price != new_price:
+        print("Price is different, sending discord notification...")
+        if last_price > new_price:
+            comment = 'cheaper'
+        else:
+            comment = 'more expensive'
+        notify_discord(new_price,comment)
+    else:
+        print("The price is the same as before")
+
+def notify_discord(new_price,comment):
+    with open(AUTH_FILE,'r') as f:
+        auth = f.read()
+
+    url = 'https://discord.com/api/v9/channels/1180832500403155095/messages' 
+    headers = {
+            "Authorization" : auth.strip()
+    }
+
+    payload = {
+            "content": "Price for " + PRODUCT + " is now " + comment + " : " + str(new_price)
+    }
+    print(payload, type(payload))
+
+    res = requests.post(url, payload, headers=headers)
+    print("Discord message sent")
+
+def main():
+    old_dataframe = pd.read_csv(FILENAME, index_col=0)
     date_today = get_date()
+    latest_day = old_dataframe.loc[len(old_dataframe) - 1]['Date']
 
-    dados = pd.DataFrame({
-        'Price':[price_today],
-        'Date':[date_today]
-        })
+    if date_today != latest_day:
+        price_today = get_price()
+        dados = pd.DataFrame({
+            'Price':[price_today],
+            'Date':[date_today]
+            })
 
-    # Concatenate the old dataframe with the new one
-    old_dataframe = pd.read_csv(filename, index_col=0)
-    dataframe=pd.concat([old_dataframe,dados])
+        # Concatenate the old dataframe with the new one
+        dataframe=pd.concat([old_dataframe,dados])
 
-    # Resets index so that the new data don't have index 0
-    dataframe.reset_index(drop=True, inplace=True)
+        # Resets index so that the new data don't have index 0
+        dataframe.reset_index(drop=True, inplace=True)
 
-    dataframe.to_csv(filename)
-    print(dataframe)
+        dataframe.to_csv(FILENAME)
+        check_new_price(old_dataframe,dados)
+        print(dataframe)
+    else:
+        print("Nothing to update for today")
 
-new_dataframe()
-
+if __name__ == '__main__':
+    main()

@@ -11,7 +11,7 @@ import pandas as pd
 import requests
 
 FILENAME = "asus.csv"
-AUTH_FILE = '/home/yori/.config/tk/dc'
+AUTH_FILE = '/home/iriya/.config/tk/dc'
 PRODUCT = 'Vivobook M1502IA'
 
 def get_price():

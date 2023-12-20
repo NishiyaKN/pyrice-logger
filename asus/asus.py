@@ -16,10 +16,8 @@ PRODUCT = 'Vivobook M1502IA'
 
 def get_price():
     try: 
-        # Don't open a graphical window
         options = Options()
         options.add_argument("--headless")
-        # Make the get request
         browser = webdriver.Firefox(options=options)
         browser.get('https://br.store.asus.com/notebook-asus-vivobook-m1502ia.html')
         # Click the cookie button to accept it all
@@ -69,14 +67,12 @@ def notify_discord(new_price,comment):
     headers = {
             "Authorization" : auth.strip()
     }
-
     payload = {
             "content": "Price for " + PRODUCT + " is now " + comment + " : " + str(new_price)
     }
-    print(payload, type(payload))
 
     res = requests.post(url, payload, headers=headers)
-    print("Discord message sent")
+    print("Discord message sent" + res)
 
 def main():
     old_dataframe = pd.read_csv(FILENAME, index_col=0)

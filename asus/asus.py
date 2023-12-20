@@ -10,37 +10,49 @@ from datetime import datetime
 import pandas as pd
 import requests
 
-FILENAME = "asus.csv"
+#from pyvirtualdisplay import Display
+#display = Display(visible=0, size=(800, 600))
+#display.start()
+
+FILENAME = "/home/iriya/py/pyrice-logger/asus/asus.csv"
 AUTH_FILE = '/home/iriya/.config/tk/dc'
 PRODUCT = 'Vivobook M1502IA'
 
 def get_price():
     try: 
         options = Options()
-        options.add_argument("--headless")
+        options.add_argument("--headless --log-level=3")
+        print(1)
         browser = webdriver.Firefox(options=options)
         browser.get('https://br.store.asus.com/notebook-asus-vivobook-m1502ia.html')
+        print(2)
         # Click the cookie button to accept it all
         btn_cookies = browser.find_element(By.XPATH, '/html/body/div[2]/div/div[2]/div[2]')
         btn_cookies.click()
+        print(3)
         # Scroll to make the specs button visible
         browser.execute_script("window.scrollTo(0,600)")
         # Click to select the right specs
         button = browser.find_element(By.XPATH, '//*[@id="option-label-configuracoes_notebook-1440-item-17509"]')
         button.click()
+        print(4)
         # Wait to get the price 
         wait = WebDriverWait(browser, 2)
         wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/main/div[2]/div/div[1]/div[3]/form/div[2]/div/div[1]/div[1]/span[1]/div/span[1]/span[1]/span')))
 
+        print(5)
         soup = BeautifulSoup(browser.page_source, 'html.parser')
 
+        print(6)
         price_element = soup.find('span', {'class': 'price'})  
         price = price_element.text.split('\xa0')[1].replace(".","").replace(",",".")
+        print(7)
         return price
     except:
         print("Something went wrong when getting the price")
-    finally:
-        browser.close()
+        exit()
+    #finally:
+        #browser.close()
 
 def get_date():
     today = datetime.today().strftime('%Y-%m-%d')

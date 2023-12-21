@@ -1,5 +1,6 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,16 +15,17 @@ import requests
 #display = Display(visible=0, size=(800, 600))
 #display.start()
 
-FILENAME = "/home/iriya/py/pyrice-logger/asus/asus.csv"
-AUTH_FILE = '/home/iriya/.config/tk/dc'
+FILENAME = "/home/toki/pyrice-logger/asus/asus.csv"
+AUTH_FILE = '/home/toki/.config/tk/dc'
 PRODUCT = 'Vivobook M1502IA'
+LOG = '/home/toki/pyrice-logger/asus/log.txt'
 
 def get_price():
     try: 
         options = Options()
-        options.add_argument("--headless --log-level=3")
+        options.add_argument("--headless")
         print(1)
-        browser = webdriver.Firefox(options=options)
+        browser = webdriver.Chrome(service=Service('/usr/bin/chromedriver'), options=options)
         browser.get('https://br.store.asus.com/notebook-asus-vivobook-m1502ia.html')
         print(2)
         # Click the cookie button to accept it all
@@ -31,14 +33,19 @@ def get_price():
         btn_cookies.click()
         print(3)
         # Scroll to make the specs button visible
-        browser.execute_script("window.scrollTo(0,600)")
+        browser.execute_script("window.scrollTo(0,1000)")
         # Click to select the right specs
+        print(3.7)
         button = browser.find_element(By.XPATH, '//*[@id="option-label-configuracoes_notebook-1440-item-17509"]')
         button.click()
-        print(4)
+        #with open(LOG,'w') as l:
+        #    l.write(browser.page_source)
+        #print(browser.page_source)
+        #print(4)
         # Wait to get the price 
-        wait = WebDriverWait(browser, 2)
-        wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/main/div[2]/div/div[1]/div[3]/form/div[2]/div/div[1]/div[1]/span[1]/div/span[1]/span[1]/span')))
+        #wait = WebDriverWait(browser, 120)
+        #print(4.8)
+        #wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/main/div[2]/div/div[1]/div[3]/form/div[2]/div/div[1]/div[1]/span[1]/div/span[1]/span[1]/span')))
 
         print(5)
         soup = BeautifulSoup(browser.page_source, 'html.parser')
@@ -48,8 +55,8 @@ def get_price():
         price = price_element.text.split('\xa0')[1].replace(".","").replace(",",".")
         print(7)
         return price
-    except:
-        print("Something went wrong when getting the price")
+    except Exception as e:
+        print("Something went wrong when getting the price: ", e)
         exit()
     #finally:
         #browser.close()

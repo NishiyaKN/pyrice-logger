@@ -16,7 +16,7 @@ import requests
 #display.start()
 USER='inaba'
 
-FILENAME = "/home/" + USER + "/pyrice-logger/asus/asus.csv"
+FILENAME = "/home/" + USER + "/pyrice-logger/asus/asushistory.csv"
 AUTH_FILE = '/home/' + USER + '/.config/tk/dc'
 PRODUCT = 'Vivobook M1502IA'
 #LOG = '/home/toki/pyrice-logger/asus/log.txt'

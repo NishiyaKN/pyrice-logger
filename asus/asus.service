@@ -3,10 +3,10 @@ Description=Web scraping service
 After=network.target
 
 [Service]
-User=iriya
+User=inaba
 Restart=on-failure
 RestartSec=600
-ExecStart=/usr/bin/python3 /home/iriya/py/pyrice-logger/asus/asus.py
+ExecStart=/usr/bin/python3 /home/inabe/pyrice-logger/asus/asus.py
 
 [Install]
 WantedBy=multi-user.target

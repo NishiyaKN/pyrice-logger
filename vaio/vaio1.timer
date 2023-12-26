@@ -1,0 +1,11 @@
+[Unit]
+Description=Run webscraper daily at 6 am
+
+[Timer]
+OnCalendar=*-*-* 06:00:00
+AccuracySec=1m
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+

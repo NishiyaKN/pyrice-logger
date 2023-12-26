@@ -1,0 +1,13 @@
+[Unit]
+Description=Web scraping service
+After=network.target
+
+[Service]
+User=inaba
+Restart=on-failure
+RestartSec=600
+ExecStart=/usr/bin/python3 /home/inaba/pyrice-logger/asus/asusprice.py
+
+[Install]
+WantedBy=multi-user.target
+

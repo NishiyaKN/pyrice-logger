@@ -1,7 +1,7 @@
 import plotly.express as px
 import pandas as pd
 
-filename='vaio1history.csv'
+filename='vaio2history.csv'
 
 dataframe = pd.read_csv(filename,index_col=0)
 dataframe['Price'] = dataframe['Price'].astype(float)

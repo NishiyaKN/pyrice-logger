@@ -6,7 +6,7 @@ After=network.target
 User=inaba
 Restart=on-failure
 RestartSec=600
-ExecStart=/usr/bin/python3 /home/inaba/pyrice-logger/asus/asusprice.py
+ExecStart=/usr/bin/python3 /home/inaba/pyrice-logger/vaio/vaio2price.py
 
 [Install]
 WantedBy=multi-user.target

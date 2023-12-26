@@ -14,9 +14,9 @@ import requests
 #from pyvirtualdisplay import Display
 #display = Display(visible=0, size=(800, 600))
 #display.start()
-USER='yori'
+USER='inaba'
 
-FILENAME = "/home/" + USER + "/re/git/pyrice-logger/vaio/vaio2history.csv"
+FILENAME = "/home/" + USER + "/pyrice-logger/vaio/vaio2history.csv"
 AUTH_FILE = '/home/' + USER + '/.config/tk/dc'
 PRODUCT = 'VAIO FE 15 Ryzen 7 5700U 16gb 512gb'
 #LOG = '/home/toki/pyrice-logger/asus/log.txt'

@@ -28,7 +28,7 @@ def get_price():
         browser = webdriver.Chrome(service=Service('/usr/bin/chromedriver'), options=options)
         browser.get('https://www.br.vaio.com/vaio-fe15-vjfe59f11x-amd-ryzen-7-5700u16gb-ddr4ssd-512gb-m2linux156-fhd-3343848/p')
         soup = BeautifulSoup(browser.page_source, 'html.parser')
-        price_element = soup.find('div', {'class': 'vaiobr-loja-1-x-wrapper__preco_por_produto'})  
+        price_element = soup.find('div', {'class': 'vaiobr-loja-2-x-wrapper__preco_por_produto'})  
         price = price_element.text.split('\xa0')[1].replace(".","").replace(",",".").split()[0]
         return price
     except Exception as e:
@@ -67,7 +67,7 @@ def notify_discord(new_price,comment):
     }
 
     res = requests.post(url, payload, headers=headers)
-    print("Discord message sent" + res)
+    print("Discord message sent" + str(res))
 
 def main():
     old_dataframe = pd.read_csv(FILENAME, index_col=0)

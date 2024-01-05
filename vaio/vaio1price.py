@@ -19,7 +19,6 @@ USER='inaba'
 FILENAME = "/home/" + USER + "/pyrice-logger/vaio/vaio1history.csv"
 AUTH_FILE = '/home/' + USER + '/.config/tk/dc'
 PRODUCT = 'VAIO FE 15 Ryzen 7 5700U 8gb 256gb'
-#LOG = '/home/toki/pyrice-logger/asus/log.txt'
 
 def get_price():
     try: 
@@ -28,7 +27,7 @@ def get_price():
         browser = webdriver.Chrome(service=Service('/usr/bin/chromedriver'), options=options)
         browser.get('https://www.br.vaio.com/notebook-vaio-fe15-ryzen-7-8gb-256gb-ssd-prata-titanio-3344016/p')
         soup = BeautifulSoup(browser.page_source, 'html.parser')
-        price_element = soup.find('div', {'class': 'vaiobr-loja-1-x-wrapper__preco_por_produto'})  
+        price_element = soup.find('div', {'class': 'vaiobr-loja-2-x-wrapper__preco_por_produto'})  
         price = price_element.text.split('\xa0')[1].replace(".","").replace(",",".").split()[0]
         return price
     except Exception as e:
@@ -67,7 +66,7 @@ def notify_discord(new_price,comment):
     }
 
     res = requests.post(url, payload, headers=headers)
-    print("Discord message sent" + res)
+    print("Discord message sent" + str(res))
 
 def main():
     old_dataframe = pd.read_csv(FILENAME, index_col=0)

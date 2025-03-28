@@ -1,0 +1,18 @@
+[Unit]
+Description=GPU Price Tracker Service
+After=network.target
+
+[Service]
+Type=simple
+User=%i  # Will use the user who enables the service
+WorkingDirectory=%h/price-tracker
+ExecStart=/usr/bin/python3 %h/re/git/pyrice-logger/gpu/getprices.py
+Environment="DISPLAY=:0"
+Environment="XAUTHORITY=%h/.Xauthority"
+
+# Logging configuration
+StandardOutput=file:/var/log/price-tracker.log
+StandardError=file:/var/log/price-tracker-error.log
+
+[Install]
+WantedBy=multi-user.target

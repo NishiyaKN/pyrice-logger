@@ -10,11 +10,17 @@ from datetime import datetime
 import json
 import time
 import requests
+import os
 
-# Configuration files
-PRODUCTS_FILE = "products.json"  # Contains product configurations
-PRICES_FILE = "price.json"  # Stores price history
-AUTH_FILE = '/home/yori/.config/tk/dc'  # Discord auth token
+# Configurable base path after home directory
+HOME = os.path.expanduser('~')
+RELATIVE_BASE = "re/git/pyrice-logger/gpu"  # Change this to your path
+
+# Full configuration paths
+BASE_PATH = os.path.join(HOME, RELATIVE_BASE)
+PRODUCTS_FILE = os.path.join(BASE_PATH, "products.json")
+PRICES_FILE = os.path.join(BASE_PATH, "price.json")
+AUTH_FILE = os.path.join(HOME, ".config/tk/dc")  # This stays in standard location
 
 # Initialize JSON files
 try:

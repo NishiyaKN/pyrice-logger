@@ -20,3 +20,7 @@ On `asus`, for example, the main script is `asusprice.py`, and it needs `seleniu
 The `pc` and `pc_hardware` directories also use `selenium`, but saves the information to a .json file. Future scripts will follow `asus` template. 
 ___
 **The scripts from the gpu and test/gpu directories were heavily assisted by AI using the scripts from pc_hardware and asus as a base**
+<<<<<<< HEAD
+=======
+
+>>>>>>> 242210b (update)
